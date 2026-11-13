@@ -1,0 +1,164 @@
+# Default GeoGG Fresh configuration for APGCE processing jobs.
+# Input discovery is exclusively through the backend-generated inputs.json.
+# Relative project paths resolve from this file (site_data/scripts).
+project:
+  # Runtime overrides this to the active processing_jobs/<job-uuid> directory.
+  output_root: ../processing_jobs
+  data_mode: REAL_FIELD_DATA
+
+paths:
+  # site_data root; this is a path base only, never an input-discovery location.
+  project_root: ..
+
+# Optional role overrides must reference already-registered dataset UUIDs.
+# Normally roles are inferred from selected dataset metadata.
+dataset_roles:
+  seismic: {}
+
+wells:
+  expected: []
+
+file_patterns:
+  las: ["{well}.las"]
+  deviation: ["{well}_Deviation.txt"]
+  checkshot: ["{well}.txt", "{well}_CS.txt"]
+
+deviation:
+  null_values: [-999.25, -999.0, -9999.0]
+  default_column_order: [md, incl, azim]
+
+timedepth:
+  velocity_bounds_ms: [1400, 6500]
+  max_velocity_jump_ratio: 1.6
+  max_extrapolation_m: 300
+  polynomial_degree: 3
+  candidate_polynomial_degrees: [2, 3, 4, 5]
+  tz_sample_step_m: 5
+  smoothing_window_m: 100
+
+checkshot_provenance:
+  approved_as_measured: []
+
+trajectory:
+  azimuth_correction_deg: 0
+
+synthetic:
+  wavelet_mode: statistical_ricker
+  max_lag_ms: 40
+  cc_threshold_tied: 0.6
+
+seismic:
+  amplitude_sample_traces: 400
+  consistency_sample_traces: 400
+
+figures:
+  dpi: 150
+
+# Stage 02 — interpreted petrophysical labels. Provider interpretations remain provisional.
+labels:
+  log_source: auto
+  combined_log_workbook: null
+  workbook_sheet: null
+  reference_curve_inventory: null
+  recompute:
+    gr_endpoint_mode: null
+    gr_clean: null
+    gr_shale: null
+    gr_clean_pct: 5
+    gr_shale_pct: 95
+    larionov_variant: null
+    rho_matrix: null
+    rho_fluid: null
+    rw: null
+    a: null
+    m: null
+    n: null
+    provenance: null
+  policy:
+    lithology:
+      vsh_sand_max: 0.40
+      vsh_shale_min: 0.60
+      phit_sand_min: 0.03
+      confidence_margin: 0.10
+    fluid:
+      swt_water_min: 0.80
+      swt_hc_potential_max: 0.70
+      phit_min_for_swt: 0.05
+      brine_from_interpreted_swt: true
+      accept_provider_fluid_flags: false
+      provider_flags_reviewed_by: null
+    support:
+      min_wells_per_class: 3
+      min_thickness_m_per_well: 3.0
+
+# Stage 03 — native-grid seismic extraction. Missing data remain NaN.
+extraction:
+  channels: [full, near, mid, far, ultrafar, pimp, simp, vpvs]
+  patch_il: 5
+  patch_xl: 5
+  patch_t: 21
+  resolutions_ms: [4, 12, 24]
+  min_time_coverage: 0.8
+  min_valid_fraction: 0.6
+  class_purity_min: 0.6
+  example_well: null
+  alignment_wells: []
+  version: v1
+  labels_table_override: null
+
+
+# Stage 06 — fold-local feature selection. All transforms and screening are fitted
+# using training wells only; reserved review wells remain excluded.
+selection:
+  resolutions_ms: null
+  groups: [stacks, elastic, fused]
+  clip_quantiles: [0.005, 0.995]
+  indicator_min_missing: 0.01
+  max_missing: 0.5
+  near_constant_fraction: 0.95
+  redundancy_abs_spearman: 0.90
+  min_rows_per_class_per_well: 5
+  min_rows_per_well_regression: 15
+  min_wells: 4
+  fdr_q: 0.10
+  min_abs_effect: 0.10
+  min_sign_consistency: 0.70
+  max_selected: 25
+
+# Stage 07 — nested whole-well model comparison.
+# MODEL ENABLE/DISABLE CONTROLS:
+# - Enable a model by including its name in the corresponding list.
+# - Disable a model by removing/commenting out its name; use [] to disable that family.
+# - Optional packages must be installed in the scientific/HPC environment.
+# Tabular models:
+#   prior       prevalence/mean baseline
+#   depth_trend TWT-only baseline (reference, not a seismic model)
+#   linear      regularised logistic/ridge regression
+#   extratrees  ExtraTrees
+#   hist_gbm    scikit-learn histogram gradient boosting
+#   xgboost     XGBoost (requires xgboost)
+#   mlp         scikit-learn multilayer perceptron
+# Deep models (require PyTorch and Stage 03 seismic patches):
+#   tcn             temporal convolutional network
+#   cnn3d_multitask  3-D convolutional multi-task network
+# Deep models predict lithology, VSH and PHIT only; they do not support sand_fluid or SWT.
+models:
+  resolution_ms: null
+  tasks: [lithology, sand_fluid, vsh, phit, swt]
+  inputs: [stacks, stacks@matched, fused@matched]
+  tabular: [prior, depth_trend, linear, extratrees, hist_gbm, xgboost, mlp]
+  deep: [tcn, cnn3d_multitask]
+  feature_choice: selected
+  scaling_modes: [independent]
+  class_weight: balanced
+  n_jobs: -1
+  seed: 2026
+  save_models: final
+  grids: {}
+  deep_epochs: 60
+  deep_batch_size: 128
+  deep_patience: 10
+  deep_device: auto
+  deep_scaling: common
+  deep_dropout: 0.2
+  deep_max_nan_fraction: 0.2

@@ -1,0 +1,94 @@
+/* Seismic cube controls and calibrated canvas layout. */
+.seismic-canvas.large.calibrated {
+  height: 650px;
+  padding-top: 103px;
+}
+.canvas-controls {
+  height: 78px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  padding: 0 9px;
+}
+.canvas-controls>.slice-controls,.canvas-controls>.render-controls {
+  height: 39px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0;
+  border-right: 0;
+}
+.slice-controls {
+  border-bottom: 1px solid var(--control-border) !important;
+}
+.slice-tabs {
+  display: flex;
+  gap: 3px;
+}
+.slice-tabs button {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 0 9px;
+}
+.slice-tabs button.active {
+  background: var(--mint);
+  color: var(--text-body);
+  border-color: var(--mint);
+}
+.slice-controls input[type=range] {
+  flex: 1;
+  min-width: 80px;
+  accent-color: var(--mint);
+}
+.slice-controls strong {
+  font: 13px DM Mono;
+  color: var(--text-body);
+  min-width: 118px;
+}
+.slice-controls small {
+  font: 11px DM Mono;
+  color: var(--text-body);
+  white-space: nowrap;
+}
+.render-controls>div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding-right: 10px;
+  border-right: 1px solid var(--control-border);
+}
+.render-controls .reset-view {
+  margin-left: auto;
+}
+.seismic-canvas.large.calibrated canvas,.seismic-canvas.large.calibrated svg {
+  top: 103px;
+  height: calc(100% - 147px);
+}
+.scale-x {
+  top: 78px;
+}
+.scale-y {
+  top: 103px;
+}
+.scale-title-x {
+  top: 85px;
+}
+.calibrated .seismic-label {
+  top: 111px;
+}
+@media (max-width:850px) {
+  .slice-controls small {
+    display: none;
+  }
+  .slice-controls strong {
+    min-width: 90px;
+  }
+  .slice-tabs button {
+    padding: 0 5px;
+  }
+  .seismic-canvas.large.calibrated {
+    height: 580px;
+  }
+}

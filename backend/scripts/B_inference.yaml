@@ -1,0 +1,77 @@
+# Dedicated Stage F configuration. This file does not configure or rerun training.
+project:
+  output_root: ../processing_jobs
+paths:
+  project_root: ..
+
+inference:
+  # Must match an immutable release under the backend-managed model_releases/ directory.
+  model_release_id: "geogg-d94ffa95-ca92-4807-9057-b91f077161da"
+
+  # Stage 08 evaluates the selected release's sealed outer-fold predictions.
+  # Use "*" to include all tasks/inputs/models, or select exact registry values.
+  evaluation:
+    task: "*"
+    input: "*"
+    model: "*"
+
+  # Default to survey-volume inference. This requires registered full, near, mid,
+  # far and ultrafar SEG-Y datasets selected for this processing job.
+  # Use source_replay only when intentionally replaying training-survey samples.
+  # The originating foundation job is read from the immutable model-release manifest.
+  # Do not configure it separately; the release is the authoritative provenance link.
+  # survey_volume: require registered seismic stack SEG-Y datasets and predict
+  # across every live IL/XL trace and time sample, without labels or well paths.
+  # source_replay: reproduce the successful source-survey inference workflow.
+  input_mode: "survey_volume"
+
+  # Streaming controls for survey-volume inference. Tabular models retain
+  # per-feature missingness; deep models apply the released patch completeness rule.
+  # Number of centre voxels prepared per CPU extraction batch. This is separate
+  # from deep_batch_size and bounds host-memory use.
+  volume_extract_batch_size: 2048
+  # Number of samples per GPU model call (independent of extraction batches).
+  deep_batch_size: 512
+  deep_pin_memory: true
+  # fp32 preserves the reference numerical path; fp16/bf16 are optional CUDA modes.
+  deep_precision: "fp32"
+  # Non-overlapping output tiles; input patches read a 2/2/10-cell halo around
+  # each centre. Completed tiles are checkpointed and safely resumed on retry.
+  volume_tile_inline: 32
+  volume_tile_crossline: 32
+  # Emit progress after this many committed tiles (the first tile is always logged).
+  volume_progress_log_tiles: 10
+  deep_max_nan_fraction: 0.2
+
+  # Optional region of interest. Omit or leave {} to process the full survey.
+  # IL/XL ranges use inclusive native survey coordinates, not array indices.
+  # XY bounds use the Stage 00 affine geometry and the same map units as the survey.
+  # Bounds can be combined; the selected region is their intersection.
+  # Output NPY arrays are cropped to the selected ROI, with geometry metadata
+  # recording the corresponding native IL/XL origin. Patch halos still read
+  # neighbouring traces outside the ROI where available.
+  volume_region: {}
+  # Example: a small test window (inclusive native IL/XL coordinates):
+  # volume_region:
+  #   inline: [1000, 1200]
+  #   crossline: [2000, 2300]
+  # Example XY bounding box (survey map coordinates):
+  # volume_region:
+  #   xy: {x_min: 450000, x_max: 451000, y_min: 6200000, y_max: 6201000}
+
+  # Stage 09 resolves the original seismic datasets through the originating
+  # foundation job's APGCE dataset records. No dataset selection is needed here.
+  model:
+    # Default: released multi-task CNN3D model.
+    task: "all"                 # or lithology, vsh, phit
+    input: "patch_stacks"
+    model: "cnn3d_multitask"   # or tcn
+
+    # Alternative tabular selection (must match model_registry.csv exactly):
+    # task: "vsh"
+    # input: "stacks"
+    # model: "extratrees"
+    #
+    # survey_volume resolves all five original SEG-Y datasets from the release's
+    # foundation job. source_replay is an explicit opt-in for patch replay.
+  deep_device: "auto"           # auto, cpu, cuda

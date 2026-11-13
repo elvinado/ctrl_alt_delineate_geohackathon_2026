@@ -1,0 +1,51 @@
+# Stage 12 geobody worker configuration. Preflight runs automatically before processing.
+geobody:
+  enabled: true
+
+  # Existing upstream processing jobs. All IDs resolve under the same
+  # definitive backend processing_jobs directory.
+  foundation_job_id: "d94ffa95-ca92-4807-9057-b91f077161da"  # Stages 00–07
+  inference_job_id: "b8176911-618c-48a3-961b-04e89343a3e7"  # Stages 08–09
+  source_volume_job_id: "21b13e5f-158f-4d27-9d2c-86bae4d0df41"  # Stages 10–11
+  source_stage_id: "11_volume_export"
+  # Exact native Stage 09/11 product to segment. The current inference release
+  # exports prediction_lithology, prediction_vsh and prediction_phit.
+  source_product: "prediction_lithology"
+  # The current output's calibration/score semantics have not yet been
+  # established as a calibrated sand probability. Keep thresholding exploratory.
+  score_semantics: "unqualified_model_output"
+
+  # NPY is the canonical source. SEG-Y is optional and only required when
+  # a downstream geobody export explicitly needs its reference geometry.
+  require_segy_reference: false
+
+  # If true, absence of development-fold threshold evidence blocks readiness.
+  # Otherwise readiness is CONDITIONAL and thresholds must be called exploratory.
+  require_threshold_evidence: false
+  threshold_evidence_paths:
+    - "stages/07_models/tables/outer_test_predictions.csv"
+
+  # Set to available only when a qualified time-depth conversion is registered.
+  # Otherwise thickness must remain in TWT or sample units.
+  depth_conversion: "unavailable"
+
+  # First extraction pass follows the specialist implementation's core idea:
+  # low/high seeded hysteresis, conservative 6-connectivity, then auditable
+  # component filters. Preview thresholds remain exploratory until calibrated.
+  tau_low: 0.35
+  tau_high: 0.65
+  connectivity: 6
+  min_voxels: 18
+  min_distinct_columns: 9
+  min_lateral_extent_cells: 3
+
+  # Requested Stage 12 deliverables. Meshes are exact voxel-boundary PLYs;
+  # large bodies are explicitly skipped rather than silently simplified.
+  mesh_max_bodies: 20
+  mesh_max_voxels: 5000000
+  mesh_max_faces: 400000
+
+  # Complete spatial exports are Stage 12 products, independent of well intersections.
+  # Run-length index and reconciliation are always generated; per-voxel XYZ is optional.
+  export_voxel_xyz: false
+  voxel_export_chunk_size: 250000

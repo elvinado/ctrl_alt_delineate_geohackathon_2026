@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 116" fill="none">
+<defs><linearGradient id="bg" x1="0" y1="0" x2="600" y2="116" gradientUnits="userSpaceOnUse"><stop stop-color="#173B37"/><stop offset=".58" stop-color="#397B69"/><stop offset="1" stop-color="#91A66F"/></linearGradient><linearGradient id="track" x1="0" y1="0" x2="0" y2="116" gradientUnits="userSpaceOnUse"><stop stop-color="#E9F5C8"/><stop offset="1" stop-color="#B9D79B"/></linearGradient></defs>
+<rect width="600" height="116" rx="14" fill="url(#bg)"/>
+<g stroke="#E7F2D1" stroke-opacity=".16"><path d="M0 23H600M0 46H600M0 69H600M0 92H600"/><path d="M355 0V116M415 0V116M475 0V116M535 0V116"/></g>
+<g stroke="url(#track)" stroke-width="2.4" stroke-linecap="round">
+<path d="M374 0C374 16 355 20 365 34S390 48 374 60 358 83 374 95 382 107 376 116"/>
+<path d="M435 0C435 14 458 20 444 35S421 51 439 66 459 87 438 100 430 109 435 116"/>
+<path d="M496 0C496 18 479 25 495 39S517 55 498 69 480 89 499 102 505 111 500 116"/>
+</g>
+<g fill="#E8F4CC"><circle cx="374" cy="34" r="3"/><circle cx="439" cy="66" r="3"/><circle cx="498" cy="69" r="3"/></g>
+<path d="M0 88C75 76 130 95 202 83S295 72 330 82" stroke="#DCEBC1" stroke-opacity=".3" stroke-width="1.5"/>
+</svg>

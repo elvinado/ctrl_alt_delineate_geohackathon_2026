@@ -1,0 +1,17 @@
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30,<1.0
+sqlalchemy>=2.0,<3.0
+pydantic-settings>=2.4,<3.0
+python-multipart>=0.0.9
+lasio>=0.31,<1.0
+segyio>=1.9.13
+numpy>=1.26,<3.0
+openai>=1.50,<3.0
+
+# Excel well-list ingestion
+openpyxl>=3.1,<4.0
+
+# Stage 12 geobody static visualisations
+matplotlib>=3.8,<4.0
+PyYAML>=6.0,<7.0
+ruamel.yaml>=0.18,<0.19

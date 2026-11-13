@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07110f" />
+    <link rel="icon" type="image/svg+xml" href="/cad-mark.svg" />
+    <meta name="application-name" content="Ctrl-Alt-Delineate" />
+    <meta name="description" content="APGCE GeoHackathon 2026 geoscience workspace" />
+    <title>Ctrl-Alt-Delineate - APGCE GeoHackathon 2026</title>
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$','$'], ['\\(','\\)']],
+          displayMath: [['$$','$$'], ['\\[','\\]']],
+          processEscapes: true,
+          tags: 'ams',
+          packages: { '[+]': ['ams', 'newcommand', 'textmacros'] }
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        },
+        startup: { typeset: false }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js" onload="window.dispatchEvent(new Event('mathjax-ready'))"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/app/main.tsx"></script>
+  </body>
+</html>

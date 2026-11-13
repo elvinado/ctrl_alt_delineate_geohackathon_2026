@@ -1,0 +1,55 @@
+/*
+ * Seismic viewer geometry overrides.
+ * Loaded after functional.css because these calibrated-view dimensions are intentional.
+ */
+.seismic-canvas.large.calibrated {
+  padding-top: 63px;
+}
+.seismic-canvas.large.calibrated svg {
+  top: 63px;
+  height: calc(100% - 107px);
+}
+.scale-x {
+  top: 38px;
+  bottom: auto;
+  height: 25px;
+  border-top: 0;
+  border-bottom: 1px solid var(--control-border);
+  background: #091612;
+}
+.scale-x span {
+  top: 7px;
+}
+.scale-x span:before {
+  top: 17px;
+}
+.scale-y {
+  top: 63px;
+}
+.scale-title-x {
+  top: 45px;
+  bottom: auto;
+  left: auto;
+  right: 23px;
+  text-align: right;
+  background: #091612;
+  padding-left: 8px;
+}
+.calibrated .seismic-label {
+  top: 71px;
+}
+.canvas-controls button {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-strong);
+}
+.canvas-controls .reset-view {
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* Full-volume SEG-Y geometry selector and asynchronous section feedback. */
+.geometry-mapping { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:10px 0; padding:9px 12px; border:1px solid var(--line, rgba(140,170,160,.22)); border-radius:10px; background:var(--panel-soft, rgba(20,45,40,.22)); }
+.geometry-mapping > span, .geometry-mapping > b { font-size:11px; font-weight:700; letter-spacing:.08em; color:var(--muted, #9bb0a8); }
+.geometry-mapping select { min-width:260px; max-width:100%; }
+.error-text { color:#e58c80 !important; }

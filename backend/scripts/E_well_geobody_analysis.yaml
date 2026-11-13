@@ -1,0 +1,40 @@
+# Stage 13: intersect a registered well trajectory with an existing Stage 12 geobody volume.
+# All job IDs must refer to completed jobs in the definitive backend processing_jobs directory.
+well_geobody_analysis:
+  # Required source jobs. These IDs must identify completed upstream processing jobs.
+  foundation_job_id: "d94ffa95-ca92-4807-9057-b91f077161da"  # Stage 01 trajectory source
+  inference_job_id: "b8176911-618c-48a3-961b-04e89343a3e7"  # provenance cross-check
+  source_volume_job_id: "21b13e5f-158f-4d27-9d2c-86bae4d0df41"  # Stage 11 native products
+  source_geobody_job_id: "45a68c60-0e1d-40c8-a6e8-f3c4a0643800"  # Stage 12 labels + catalogue
+
+  source_volume_stage_id: "11_volume_export"
+  source_geobody_stage_id: "12_geobody"
+
+  # Explicit inventory of wells available in the supplied Foundation Stage 01 trajectory table.
+  # Update this list deliberately when the registered well inventory changes.
+  # Well matching is case-insensitive.
+  well_id:
+    - "eo-1"
+    - "eo-2"
+    - "m-1"
+    - "no-1"
+    - "no-2"
+    - "no-4"
+    - "np-1"
+    - "np-2"
+    - "o-1"
+    - "o-2"
+    - "o-3"
+    - "p-1"
+    - "s-1"
+
+  # The largest intersected body is selected by Stage 12 catalogue voxel_count.
+  # This deterministic size-based selection is not a geological quality ranking.
+
+  # Specialist PHIT/SWT statistics use only Stage 11 frozen canonical prediction arrays.
+  # Quantiles are histogram estimates over [0, 1]; gates measure support, not geology.
+  specialist_phit_swt:
+    min_joint_support_fraction: 0.5
+    min_joint_voxels: 100
+    histogram_bins: 1000
+

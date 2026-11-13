@@ -1,0 +1,301 @@
+/*
+ * Shared button and button-like control styles.
+ * Semantic variants own appearance; component classes may still own geometry.
+ */
+/* Shared button system. Keep layout-specific classes on the component; use
+   .btn plus one semantic variant for consistent interaction and appearance. */
+.app-shell {
+  --danger-bg: #b42332;
+  --danger-bg-hover: #941b29;
+  --danger-border: #d04450;
+  --danger-border-hover: #f07880;
+  --danger-text: #ffffff;
+}
+.app-shell .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 2.35rem;
+  padding: 0.55rem 0.9rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-control, 0.5rem);
+  font: 600 var(--font-sm, 0.8125rem)/1.25 Manrope, system-ui, sans-serif;
+  text-decoration: none;
+  white-space: normal;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease,
+    color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+.app-shell .btn svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+}
+.app-shell .btn:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
+}
+.app-shell .btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+.app-shell .btn:not(:disabled):active {
+  transform: translateY(1px);
+}
+.app-shell .btn.btn-primary {
+  background: var(--mint);
+  border-color: var(--mint);
+  color: var(--text-on-accent, #07110f);
+}
+.app-shell .btn.btn-primary:hover:not(:disabled) {
+  filter: brightness(0.94);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--mint) 18%, transparent);
+}
+.app-shell .btn.btn-secondary {
+  background: var(--surface-input, var(--panel2));
+  border-color: var(--control-border);
+  color: var(--text-body);
+}
+.app-shell .btn.btn-secondary:hover:not(:disabled) {
+  background: var(--surface-hover, var(--panel2));
+  border-color: var(--mint);
+  color: var(--text-strong);
+}
+.app-shell .btn.btn-danger {
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger-text);
+  font-weight: 700;
+}
+.app-shell .btn.btn-danger:hover:not(:disabled) {
+  background: var(--danger-bg-hover);
+  border-color: var(--danger-border-hover);
+  color: var(--danger-text);
+}
+.app-shell .btn.btn-danger:disabled {
+  background: var(--danger-bg);
+  border-color: var(--danger-border);
+  color: var(--danger-text);
+}
+/* Non-variant controls still share consistent focus, disabled and motion rules. */
+.app-shell button:not(.btn) {
+  transition: background-color 140ms ease, border-color 140ms ease,
+    color 140ms ease, box-shadow 140ms ease;
+}
+/* Specialized controls reuse the same interaction language while keeping
+   their own compact geometry and component-specific layout. */
+.app-shell .btn-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  min-width: 2.1rem;
+  padding: 0;
+  border: 1px solid var(--control-border);
+  border-radius: var(--radius-control, 0.5rem);
+  background: var(--surface-input, var(--panel2));
+  color: var(--text-body);
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease,
+    color 140ms ease, box-shadow 140ms ease;
+}
+.app-shell .btn-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+.app-shell .btn-icon:hover:not(:disabled) {
+  background: var(--surface-hover, var(--panel2));
+  border-color: var(--mint);
+  color: var(--text-strong);
+}
+.app-shell .btn-icon:focus-visible,
+.app-shell .btn-nav:focus-visible,
+.app-shell .btn-segment:focus-visible,
+.app-shell .btn-chat-suggestion:focus-visible,
+.app-shell .btn-chat-history:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
+}
+.app-shell .btn-icon:disabled,
+.app-shell .btn-nav:disabled,
+.app-shell .btn-segment:disabled,
+.app-shell .btn-chat-history:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+.app-shell .btn-icon-danger:hover:not(:disabled) {
+  border-color: var(--danger-border);
+  background: color-mix(in srgb, var(--danger-bg) 16%, var(--surface));
+  color: var(--danger-border);
+}
+.app-shell .btn-icon-primary,
+.app-shell .composer .btn-icon-primary {
+  border-color: var(--mint);
+  background: var(--mint);
+  color: var(--text-on-accent, #07110f);
+}
+.app-shell .composer .btn-icon-primary:hover:not(:disabled) {
+  border-color: var(--mint);
+  background: var(--mint);
+  filter: brightness(.92);
+  color: var(--text-on-accent, #07110f);
+}
+.app-shell .btn-icon-compact {
+  width: 1.5rem;
+  height: 1.5rem;
+  min-width: 1.5rem;
+  border-radius: 4px;
+}
+.app-shell .btn-icon-compact svg {
+  width: .75rem;
+  height: .75rem;
+}
+.app-shell nav .btn-nav,
+.app-shell .side-bottom .btn-nav {
+  width: 100%;
+  min-height: 2.65rem;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .65rem .75rem;
+  border: 1px solid transparent;
+  border-radius: .5rem;
+  background: transparent;
+  color: var(--text-body);
+  text-align: left;
+  font: 500 .8125rem/1.25 Manrope, system-ui, sans-serif;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease,
+    color 140ms ease, box-shadow 140ms ease;
+}
+.app-shell nav .btn-nav svg,
+.app-shell .side-bottom .btn-nav svg {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex: 0 0 auto;
+}
+.app-shell nav .btn-nav:hover,
+.app-shell .side-bottom .btn-nav:hover {
+  background: var(--surface-hover);
+  color: var(--text-strong);
+}
+.app-shell nav .btn-nav.active,
+.app-shell .side-bottom .btn-nav.active {
+  background: var(--surface-soft);
+  border-color: var(--control-border);
+  color: var(--text-strong);
+  box-shadow: inset 2px 0 var(--mint);
+}
+.app-shell .btn-segment {
+  min-height: 1.75rem;
+  padding: .25rem .65rem;
+  border: 1px solid transparent;
+  border-radius: .35rem;
+  background: transparent;
+  color: var(--text-subtle);
+  font: 600 .7rem/1.2 Manrope, system-ui, sans-serif;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+.app-shell .btn-segment:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--text-strong);
+}
+.app-shell .btn-segment.active {
+  background: var(--surface-raised);
+  border-color: var(--control-border);
+  color: var(--text-strong);
+}
+.app-shell .btn-compact {
+  min-height: 1.5rem;
+  padding: .2rem .5rem;
+  font-size: .8rem;
+}
+.app-shell .btn-chat-suggestion {
+  padding: .55rem .75rem;
+  border: 1px solid var(--control-border);
+  border-radius: .55rem;
+  background: var(--surface-soft);
+  color: var(--text-body);
+  font: 500 .75rem/1.4 Manrope, system-ui, sans-serif;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+.app-shell .btn-chat-suggestion:hover {
+  border-color: var(--mint);
+  background: var(--surface-hover);
+  color: var(--text-strong);
+}
+.app-shell .btn-chat-history {
+  border: 0;
+  background: transparent;
+  color: var(--text-body);
+  cursor: pointer;
+}
+.app-shell .btn-chat-history:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--text-strong);
+}
+.app-shell .chat-history-row.active .btn-chat-history {
+  color: var(--text-strong);
+}
+.app-shell .btn-theme-toggle {
+  min-height: 2.1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  padding: 0 .7rem;
+  border: 1px solid var(--control-border);
+  border-radius: .45rem;
+  background: var(--surface-input);
+  color: var(--text-body);
+  font: 600 .7rem/1.2 Manrope, system-ui, sans-serif;
+  cursor: pointer;
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+}
+.app-shell .btn-theme-toggle svg {
+  width: .9rem;
+  height: .9rem;
+  color: var(--mint);
+}
+.app-shell .btn-theme-toggle:hover {
+  border-color: var(--mint);
+  background: var(--surface-hover);
+  color: var(--text-strong);
+}
+.app-shell .processing-toggle button.btn-segment.active {
+  background: var(--surface-raised);
+  border-color: var(--control-border);
+  color: var(--text-strong);
+}
+.app-shell[data-theme] nav .btn-nav.active,
+.app-shell[data-theme] .side-bottom .btn-nav.active {
+  background: var(--surface-soft);
+  color: var(--text-strong);
+}
+.app-shell .btn-text {
+  display: inline-flex;
+  align-items: center;
+  padding: .2rem .35rem;
+  border: 0;
+  border-radius: .25rem;
+  background: transparent;
+  color: var(--text-body);
+  font: 600 .72rem/1.3 Manrope, system-ui, sans-serif;
+  cursor: pointer;
+}
+.app-shell .btn-text:hover {
+  background: var(--surface-hover);
+  color: var(--mint);
+}
+.app-shell .btn-icon.project-dialog-close {
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  flex: 0 0 30px;
+  font-size: 22px;
+  line-height: 1;
+}

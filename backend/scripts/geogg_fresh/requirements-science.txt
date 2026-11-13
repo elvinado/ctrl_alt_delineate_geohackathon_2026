@@ -1,0 +1,17 @@
+# Install in the dedicated scientific processing environment, not the API environment.
+numpy==1.26.4
+pandas==2.3.3
+scipy==1.15.3
+matplotlib==3.10.7
+PyYAML==6.0.3
+openpyxl==3.1.5
+scikit-learn
+xgboost
+psutil
+tqdm
+lasio>=0.31,<1.0
+segyio>=1.9.13
+# Install a CPU or CUDA PyTorch build matching the target HPC node separately to enable
+# models.deep: [tcn, cnn3d_multitask]. Keep torch out of the API environment.
+# Example only (choose the correct wheel/index for the HPC CUDA runtime):
+# python -m pip install torch

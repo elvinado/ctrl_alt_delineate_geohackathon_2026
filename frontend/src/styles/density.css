@@ -1,0 +1,43 @@
+/* Seismic density rendering: visualization-specific surfaces and controls. */
+.seismic-canvas.large.calibrated canvas,.seismic-canvas.large.calibrated svg {
+  width: calc(100% - 74px);
+  height: calc(100% - 107px);
+  position: absolute;
+  left: 58px;
+  top: 63px;
+  border: 1px solid var(--control-border);
+  cursor: crosshair;
+}
+.seismic-canvas.large.calibrated canvas {
+  image-rendering: auto;
+  background: #d9ddd9;
+}
+.seismic-canvas.large.calibrated svg.density-overlay {
+  z-index: 2;
+  border: 0;
+  pointer-events: none;
+}
+.display-mode select {
+  height: 24px;
+  border: 1px solid var(--control-border);
+  background: #11231e;
+  color: var(--text-strong);
+  border-radius: 4px;
+  padding: 0 22px 0 7px;
+  font: 12px DM Mono;
+  outline: 0;
+}
+.display-mode select:focus {
+  border-color: var(--mint);
+}
+@media (max-width:850px) {
+  .canvas-controls {
+    gap: 5px;
+  }
+  .canvas-controls>div {
+    padding-right: 5px;
+  }
+  .display-mode span {
+    display: none;
+  }
+}

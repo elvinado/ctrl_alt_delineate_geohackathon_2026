@@ -1,0 +1,58 @@
+# Stage 14: well-anchored prospect definition, GRV and well-log characterisation.
+# Source jobs are immutable completed jobs in the definitive processing_jobs store.
+prospect:
+  foundation_job_id: "d94ffa95-ca92-4807-9057-b91f077161da"  # Stage 01 trajectories + Stage 02 interpreted logs
+  inference_job_id: "b8176911-618c-48a3-961b-04e89343a3e7"  # Stage 09 provenance cross-check
+  source_volume_job_id: "21b13e5f-158f-4d27-9d2c-86bae4d0df41"  # Stage 11 native volume provenance
+  source_geobody_job_id: "45a68c60-0e1d-40c8-a6e8-f3c4a0643800"  # Stage 12 labels, catalogue and XY run-length index
+
+  trajectory_stage_id: "01_well_ties"
+  well_log_stage_id: "02_labels"
+  source_volume_stage_id: "11_volume_export"
+  source_geobody_stage_id: "12_geobody"
+
+  # Explicit full well inventory used for path intersections and log evaluation.
+  well_id:
+    - "eo-1"
+    - "eo-2"
+    - "m-1"
+    - "no-1"
+    - "no-2"
+    - "no-4"
+    - "np-1"
+    - "np-2"
+    - "o-1"
+    - "o-2"
+    - "o-3"
+    - "p-1"
+    - "s-1"
+
+  # Automatically use every explicitly listed well that intersects a retained
+  # geobody with at least min_interval_samples. No well is invented or added.
+  # Use "explicit" mode plus anchor_well_id when a fixed anchor is required.
+  anchor_selection_mode: "intersecting_configured_wells"
+  anchor_well_id: []
+
+  twt_pad_ms: 8.0
+  min_interval_samples: 3
+  merge_gap_ms: 8.0
+
+  net_cutoffs:
+    vsh_max: 0.40
+    phit_min: 0.03
+  cutoff_grid:
+    vsh_max: [0.30, 0.40, 0.50]
+    phit_min: [0.03, 0.08, 0.12]
+
+  # Set only after confirming the SEG-Y CDP X/Y coordinate units from survey metadata.
+  # Supported: m, ft, us_survey_foot. Null blocks GRV/HCPV rather than assuming metres.
+  xy_coordinate_units: null
+
+  # Phase 1–2 only. FVF, recovery and geological-risk calculations are intentionally absent.
+  min_net_m_per_well: 1.0
+  review_max_footprint_fraction: 0.05
+  water_sw_min: 0.90
+  hc_sw_max: 0.60
+  bootstrap_replicates: 1000
+  bootstrap_seed: 14
+  velocity_uncertainty_fraction: 0.10

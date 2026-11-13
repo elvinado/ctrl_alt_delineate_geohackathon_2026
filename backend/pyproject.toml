@@ -1,0 +1,16 @@
+[tool.ruff]
+line-length = 88
+target-version = "py310"
+
+[tool.ruff.lint]
+# Prioritize syntax/import errors and unused or undefined names. Formatting is
+# configured separately; broader style rules can be enabled incrementally.
+select = ["E4", "E9", "F"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "lf"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

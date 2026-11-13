@@ -1,0 +1,1343 @@
+/*
+ * Theme tokens are split into two independent dimensions:
+ * - data-theme controls dark/light surfaces and contrast.
+ * - data-color-scheme controls the accent palette.
+ * Add a palette by defining its four accent tokens below; component CSS stays unchanged.
+ */
+.app-shell[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #07110f;
+  --panel: #0c1815;
+  --panel2: #101f1b;
+  --line: #20322c;
+  --muted: #83958e;
+  --text: #e9f2ed;
+  --mint: #67d0b5;
+  --mint2: #bcebdc;
+  --amber: #edac64;
+  --violet: #a984db;
+}
+.app-shell[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f3f7f5;
+  --panel: #ffffff;
+  --panel2: #eaf1ed;
+  --line: #d5e1da;
+  --muted: #64766d;
+  --text: #20332b;
+  --mint: #16866d;
+  --mint2: #176e5b;
+  --amber: #a96720;
+  --violet: #7650a8;
+  background: var(--bg);
+  color: var(--text);
+}
+/* Dark palette accents */
+.app-shell[data-color-scheme="blue"][data-theme="dark"] {
+  --mint: #70baff;
+  --mint2: #c2e2ff;
+  --amber: #edbd72;
+  --violet: #a9a0ff;
+}
+.app-shell[data-color-scheme="purple"][data-theme="dark"] {
+  --mint: #bd9aff;
+  --mint2: #e0d0ff;
+  --amber: #e9b878;
+  --violet: #bd9aff;
+}
+.app-shell[data-color-scheme="red"][data-theme="dark"] {
+  --mint: #ff8585;
+  --mint2: #ffc5c5;
+  --amber: #f2bd72;
+  --violet: #d6a0ef;
+}
+.app-shell[data-color-scheme="yellow"][data-theme="dark"] {
+  --mint: #f2cf65;
+  --mint2: #ffedaa;
+  --amber: #f2cf65;
+  --violet: #c4a4ed;
+}
+/* Light palette accents */
+.app-shell[data-color-scheme="blue"][data-theme="light"] {
+  --mint: #176db5;
+  --mint2: #15568b;
+  --amber: #98651d;
+  --violet: #6556b5;
+}
+.app-shell[data-color-scheme="purple"][data-theme="light"] {
+  --mint: #7950b5;
+  --mint2: #603c91;
+  --amber: #98651d;
+  --violet: #7950b5;
+}
+.app-shell[data-color-scheme="red"][data-theme="light"] {
+  --mint: #c13f48;
+  --mint2: #9f3038;
+  --amber: #98651d;
+  --violet: #8653a8;
+}
+.app-shell[data-color-scheme="yellow"][data-theme="light"] {
+  --mint: #876000;
+  --mint2: #775908;
+  --amber: #98720b;
+  --violet: #7650a8;
+}
+.theme-toggle,
+.theme-scheme-control select {
+  min-height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--panel);
+  color: var(--text);
+  font: 12px "DM Mono", monospace;
+}
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 11px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.theme-toggle:hover,
+.theme-scheme-control select:hover {
+  border-color: var(--mint);
+}
+.theme-toggle svg {
+  width: 14px;
+  height: 14px;
+  color: var(--mint);
+}
+.theme-scheme-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted);
+  font: 11px "DM Mono", monospace;
+}
+.theme-scheme-control select {
+  padding: 0 25px 0 9px;
+  cursor: pointer;
+}
+.theme-scheme-control select:focus-visible,
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 2px;
+}
+/* Overall page canvas: dark-mode glow and light-mode geological contours. */
+html[data-theme="dark"][data-color-scheme="default"] {
+  --bg: #07110f;
+  --bg-glow: #17342c;
+}
+html[data-theme="dark"][data-color-scheme="blue"] {
+  --bg: #080f1b;
+  --bg-glow: #1b3454;
+}
+html[data-theme="dark"][data-color-scheme="purple"] {
+  --bg: #100c1b;
+  --bg-glow: #38244f;
+}
+html[data-theme="dark"][data-color-scheme="red"] {
+  --bg: #190d10;
+  --bg-glow: #4b2228;
+}
+html[data-theme="dark"][data-color-scheme="yellow"] {
+  --bg: #171408;
+  --bg-glow: #44391b;
+}
+html[data-theme="light"][data-color-scheme="default"] {
+  --bg: #f7faf8;
+  --contour-ink: 27, 91, 72;
+}
+html[data-theme="light"][data-color-scheme="blue"] {
+  --bg: #f6f9fd;
+  --contour-ink: 35, 83, 132;
+}
+html[data-theme="light"][data-color-scheme="purple"] {
+  --bg: #faf8fd;
+  --contour-ink: 91, 62, 132;
+}
+html[data-theme="light"][data-color-scheme="red"] {
+  --bg: #fdf8f8;
+  --contour-ink: 139, 53, 60;
+}
+html[data-theme="light"][data-color-scheme="yellow"] {
+  --bg: #fcfaf2;
+  --contour-ink: 116, 87, 22;
+}
+body {
+  background: radial-gradient(circle at 75% -10%, var(--bg-glow) 0, transparent 26%), var(--bg);
+}
+html[data-theme="light"] body {
+  background: var(--bg);
+  background-attachment: fixed;
+}
+.app-shell {
+  background: transparent;
+}
+/* Light canvas: pale surface with darker, low-contrast topographic contour lines. */
+.app-shell[data-theme="light"] {
+  position: relative;
+  isolation: isolate;
+}
+.app-shell[data-theme="light"]::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-radial-gradient(ellipse 76% 92% at 103% 0%,
+      transparent 0 68px,
+      rgba(var(--contour-ink), .13) 69px 70px,
+      transparent 71px 119px),
+    repeating-radial-gradient(ellipse 70% 78% at -8% 104%,
+      transparent 0 91px,
+      rgba(var(--contour-ink), .085) 92px 93px,
+      transparent 94px 151px);
+}
+.app-shell[data-theme="light"] > * {
+  position: relative;
+  z-index: 1;
+}
+/* Keep the navigation rail pinned while the main content scrolls.
+   The light-canvas stacking rule above must not replace sticky positioning. */
+.app-shell[data-theme="light"] > .sidebar {
+  position: sticky;
+  top: 0;
+  align-self: start;
+  height: 100vh;
+  min-height: 100vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+/* Light-mode surface and contrast adjustments. Accent colors remain token-driven. */
+.app-shell[data-theme="light"] .sidebar,
+.app-shell[data-theme="light"] .topbar {
+  background: rgba(255,255,255,.94);
+}
+.app-shell[data-theme="light"] .sidebar {
+  border-color: var(--line);
+}
+.app-shell[data-theme="light"] .brand strong,
+.app-shell[data-theme="light"] .topbar strong,
+.app-shell[data-theme="light"] .page h1,
+.app-shell[data-theme="light"] .page h2,
+.app-shell[data-theme="light"] .page h3 {
+  color: var(--text-body);
+}
+.app-shell[data-theme="light"] .brand span,
+.app-shell[data-theme="light"] .crumb {
+  color: var(--text-subtle);
+}
+.app-shell[data-theme="light"] nav button,
+.app-shell[data-theme="light"] .side-bottom button {
+  color: var(--text-body);
+}
+.app-shell[data-theme="light"] nav button:hover,
+.app-shell[data-theme="light"] nav button.active,
+.app-shell[data-theme="light"] .side-bottom button:hover,
+.app-shell[data-theme="light"] .side-bottom button.active {
+  background: color-mix(in srgb, var(--mint) 11%, white);
+  color: var(--text);
+}
+.app-shell[data-theme="light"] .workspace-card,
+.app-shell[data-theme="light"] .inventory-table,
+.app-shell[data-theme="light"] .preview-card,
+.app-shell[data-theme="light"] .system-section,
+.app-shell[data-theme="light"] .system-health-card,
+.app-shell[data-theme="light"] .processing-operation-grid article,
+.app-shell[data-theme="light"] .runtime-setting-field,
+.app-shell[data-theme="light"] .runtime-setting-toggle,
+.app-shell[data-theme="light"] .processing-runner-settings,
+.app-shell[data-theme="light"] .well-table-api,
+.app-shell[data-theme="light"] .well-survey-visualization {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--text-strong);
+}
+.app-shell[data-theme="light"] .table-row {
+  border-color: var(--control-border);
+  color: var(--text-body);
+}
+.app-shell[data-theme="light"] .table-row:hover,
+.app-shell[data-theme="light"] .table-row.selected {
+  background: color-mix(in srgb, var(--mint) 8%, white);
+}
+.app-shell[data-theme="light"] .table-row strong,
+.app-shell[data-theme="light"] .dataset strong,
+.app-shell[data-theme="light"] .well-table-visual-head strong {
+  color: var(--text-body);
+}
+.app-shell[data-theme="light"] .table-labels,
+.app-shell[data-theme="light"] .preview-meta>div,
+.app-shell[data-theme="light"] .well-table-metrics>div,
+.app-shell[data-theme="light"] .well-survey-chart {
+  background: var(--surface-soft);
+  border-color: var(--control-border);
+}
+.app-shell[data-theme="light"] .dropzone {
+  background: linear-gradient(120deg,#fff,#f0f6f2);
+  border-color: color-mix(in srgb, var(--mint) 45%, var(--control-border));
+}
+.app-shell[data-theme="light"] .dropzone:hover,
+.app-shell[data-theme="light"] .dropzone.dragging {
+  background: color-mix(in srgb, var(--mint) 10%, white);
+}
+.app-shell[data-theme="light"] .upload-icon,
+.app-shell[data-theme="light"] .dataset>i,
+.app-shell[data-theme="light"] .processing-operation-icon {
+  background: color-mix(in srgb, var(--mint) 12%, white);
+}
+.app-shell[data-theme="light"] .dataset-api-result,
+.app-shell[data-theme="light"] .dataset-api-result pre,
+.app-shell[data-theme="light"] .well-table-scroll {
+  background: var(--surface-soft);
+  border-color: var(--control-border);
+  color: var(--text-body);
+}
+.app-shell[data-theme="light"] .dataset-api-result>div,
+.app-shell[data-theme="light"] .well-table-scroll th {
+  background: var(--surface-raised);
+  color: var(--text-body);
+  border-color: var(--control-border);
+}
+.app-shell[data-theme="light"] .well-table-scroll td {
+  color: var(--text-body);
+  border-color: var(--control-border);
+}
+.app-shell[data-theme="light"] .well-table-scroll tbody tr:hover {
+  background: color-mix(in srgb, var(--mint) 8%, white);
+}
+.app-shell[data-theme="light"] input,
+.app-shell[data-theme="light"] select,
+.app-shell[data-theme="light"] textarea {
+  color: var(--text-body);
+  background: #fff;
+  border-color: var(--control-border);
+}
+.app-shell[data-theme="light"] .btn-primary {
+  background: var(--mint);
+  color: var(--text-on-accent);
+}
+.app-shell[data-theme="light"] .btn-secondary,
+.app-shell[data-theme="light"] .icon-btn,
+.app-shell[data-theme="light"] .open-viewer {
+  color: var(--text-body);
+  border-color: var(--control-border);
+  background: #f7faf8;
+}
+.app-shell[data-theme="light"] .chat-suggested-questions button {
+  background: color-mix(in srgb, var(--mint) 9%, white);
+  border-color: color-mix(in srgb, var(--mint) 25%, white);
+  color: var(--mint2);
+}
+.app-shell[data-theme="light"] .chat-suggested-questions>strong {
+  color: var(--text-body);
+}
+.app-shell[data-theme="light"] .api-status-badge {
+  background: #f5faf7;
+  border-color: var(--line);
+  color: var(--text-body);
+}
+.app-shell[data-theme="light"] .page-empty,
+.app-shell[data-theme="light"] .system-meta,
+.app-shell[data-theme="light"] .processing-operation-grid p {
+  color: var(--muted);
+}
+.app-shell[data-theme="light"] .seismic-canvas {
+  background: #edf4f0;
+  border-color: var(--line);
+}
+.app-shell[data-theme="light"] .seismic-label {
+  background: #fff;
+  color: var(--text-body);
+  border-color: var(--control-border);
+}
+.app-shell[data-theme="light"] .well-survey-chart svg text {
+  fill: var(--text-subtle);
+}
+.app-shell[data-theme="light"] .well-survey-chart .chart-gridline {
+  stroke: var(--line);
+}
+.app-shell[data-theme="light"] .well-survey-chart .chart-axis {
+  stroke: var(--line-strong);
+}
+.app-shell[data-theme="light"] .mode-switch,
+.app-shell[data-theme="light"] .gemma {
+  color: var(--text-body);
+  border-color: var(--line);
+}
+.app-shell[data-theme="light"] .system-error,
+.app-shell[data-theme="light"] .well-table-error {
+  background: #fff2ef;
+}
+@media (max-width: 720px) {
+  .theme-scheme-control > span {
+    display: none;
+  }
+  .theme-scheme-control select {
+    max-width: 92px;
+  }
+}
+@media (max-width: 650px) {
+  .theme-toggle span {
+    display: none;
+  }
+  .theme-toggle {
+    width: 34px;
+    padding: 0;
+    justify-content: center;
+  }
+}
+/* Token-driven surfaces for components that previously retained fixed dark colors. */
+.app-shell[data-theme="dark"] {
+  --surface: color-mix(in srgb, var(--mint) 3%, #0a1613);
+  --surface-raised: color-mix(in srgb, var(--mint) 5%, #0d1c17);
+  --surface-soft: color-mix(in srgb, var(--mint) 7%, #101f1b);
+  --surface-hover: color-mix(in srgb, var(--mint) 11%, #142720);
+  --surface-input: color-mix(in srgb, var(--mint) 2%, #091511);
+  --surface-danger: #291b17;
+  --surface-warning: color-mix(in srgb, var(--amber) 9%, var(--surface));
+  --text-strong: #e4f0e9;
+  --text-body: #aebfb6;
+  --text-subtle: #71877e;
+  --control-border: #506d60;
+}
+.app-shell[data-theme="light"] {
+  --surface: color-mix(in srgb, var(--mint) 2%, #ffffff);
+  --surface-raised: color-mix(in srgb, var(--mint) 4%, #f8fbf9);
+  --surface-soft: color-mix(in srgb, var(--mint) 6%, #f1f6f3);
+  --surface-hover: color-mix(in srgb, var(--mint) 10%, #ffffff);
+  --surface-input: color-mix(in srgb, var(--mint) 1%, #ffffff);
+  --surface-danger: #fff2ef;
+  --surface-warning: color-mix(in srgb, var(--amber) 10%, var(--surface));
+  --text-strong: #243b30;
+  --text-body: #40554a;
+  --text-subtle: #64766d;
+  --control-border: #7d9286;
+}
+.app-shell .project-current-strip > div,
+.app-shell .workspace-card .workspace-project-detail,
+.app-shell .chat-history,
+.app-shell .chat-window,
+.app-shell .preview-card,
+.app-shell .viewer-panel,
+.app-shell .insight-panel,
+.app-shell .dataset-api-tools,
+.app-shell .runtime-settings-note,
+.app-shell .runtime-format-grid label,
+.app-shell .system-meta {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--text-body);
+}
+.app-shell .project-current-strip strong,
+.app-shell .chat-history-heading,
+.app-shell .chat-history-item,
+.app-shell .preview-title strong,
+.app-shell .insight-panel h3,
+.app-shell .insight strong,
+.app-shell .runtime-settings-note strong,
+.app-shell .system-meta code {
+  color: var(--text-strong);
+}
+.app-shell .project-current-strip span,
+.app-shell .project-current-strip small,
+.app-shell .workspace-project-detail small,
+.app-shell .preview-title span,
+.app-shell .preview-meta span,
+.app-shell .insight small,
+.app-shell .chat-history-item small,
+.app-shell .history-empty {
+  color: var(--text-subtle);
+}
+.app-shell .workspace-card .workspace-project-detail,
+.app-shell .project-current-strip > div,
+.app-shell .runtime-format-grid label,
+.app-shell .runtime-settings-note,
+.app-shell .dataset-survey-assignment,
+.app-shell .survey-viewer-context,
+.app-shell .survey-viewer-context > div,
+.app-shell .insight,
+.app-shell .system-meta {
+  border-color: var(--line);
+}
+.app-shell .workspace-card .workspace-actions button,
+.app-shell .workspace-surveys .survey-datasets-button,
+.app-shell .viewer-survey-actions .btn-secondary,
+.app-shell .inventory-action,
+.app-shell .inventory-action.delete,
+.app-shell .open-viewer {
+  background: var(--surface-raised);
+  border-color: var(--control-border);
+  color: var(--text-body);
+}
+.app-shell .workspace-card .workspace-actions button:hover:not(:disabled),
+.app-shell .workspace-surveys .survey-datasets-button:hover:not(:disabled),
+.app-shell .inventory-action:hover:not(:disabled),
+.app-shell .open-viewer:hover:not(:disabled) {
+  border-color: var(--mint);
+  color: var(--mint2);
+}
+.app-shell .viewer-survey-actions label,
+.app-shell .survey-data-pick label,
+.app-shell .workspace-surveys > .survey-label,
+.app-shell .insight > i,
+.app-shell .chat-history-item > svg {
+  color: var(--mint);
+}
+.app-shell .viewer-survey-actions select,
+.app-shell .survey-data-pick select,
+.app-shell .dataset-survey-assignment select,
+.app-shell .workspace-surveys select {
+  background: var(--surface-input);
+  color: var(--text-strong);
+  border-color: var(--control-border);
+}
+.app-shell .survey-viewer-context {
+  background: var(--surface-soft);
+}
+.app-shell .survey-viewer-context > div {
+  border-right-color: var(--line);
+}
+.app-shell .survey-viewer-context span {
+  color: var(--text-subtle);
+}
+.app-shell .survey-viewer-context strong {
+  color: var(--text-strong);
+}
+.app-shell .dataset-survey-assignment {
+  background: var(--surface-soft);
+}
+.app-shell .dataset-survey-assignment label,
+.app-shell .dataset-survey-assignment small {
+  color: var(--text-subtle);
+}
+.app-shell .runtime-settings-note {
+  background: var(--surface-raised);
+}
+.app-shell .runtime-format-grid label {
+  background: var(--surface);
+  color: var(--text-body);
+}
+.app-shell .runtime-format-grid label.selected {
+  background: color-mix(in srgb, var(--mint) 12%, var(--surface));
+  border-color: var(--mint);
+  color: var(--mint2);
+}
+.app-shell .processing-script-viewer,
+.app-shell .processing-script-editor {
+  background: var(--surface-input);
+  border-color: var(--line);
+  color: var(--text-body);
+}
+.app-shell .dataset-api-tools {
+  background: var(--surface-raised);
+  color: var(--text-strong);
+}
+.app-shell .chat-history-row:hover,
+.app-shell .chat-history-row.active {
+  background: var(--surface-hover);
+}
+.app-shell .chat-history-item:hover,
+.app-shell .chat-history-row.active .chat-history-item {
+  color: var(--text-strong);
+}
+.app-shell .chat-history-delete {
+  color: var(--text-subtle);
+}
+.app-shell .chat-history-delete:hover {
+  background: color-mix(in srgb, #c44b4b 16%, var(--surface));
+  color: var(--text-body);
+}
+.app-shell .insight-panel {
+  background: var(--surface);
+}
+.app-shell .viewer-panel {
+  background: var(--surface);
+}
+.app-shell .runtime-settings-note code {
+  color: var(--mint2);
+}
+/* Keep preview sub-surfaces consistent with the selected mode and palette. */
+.app-shell .preview-meta > div,
+.app-shell .qc-note,
+.app-shell .csv-preview,
+.app-shell .well-track,
+.app-shell .track-head {
+  background: var(--surface-soft);
+  border-color: var(--line);
+}
+.app-shell .qc-note {
+  color: var(--mint2);
+}
+.app-shell .qc-note small {
+  color: var(--text-subtle);
+}
+.app-shell .preview-title button {
+  color: var(--text-subtle);
+}
+.app-shell .survey-datasets-button:disabled,
+.app-shell .workspace-actions button:disabled {
+  opacity: .4;
+}
+/* Nested controls and metadata inside the viewer and chat workspaces. */
+.app-shell .viewer-toolbar,
+.app-shell .viewer-footer,
+.app-shell .well-depth,
+.app-shell .well-summary,
+.app-shell .well-summary div,
+.app-shell .track-head {
+  color: var(--text-subtle);
+  border-color: var(--line);
+}
+.app-shell .viewer-toolbar b,
+.app-shell .well-summary h3 {
+  color: var(--text-strong);
+}
+.app-shell .well-view {
+  background: var(--surface);
+  border-color: var(--line);
+}
+.app-shell .well-summary div {
+  border-bottom-color: var(--line);
+}
+.app-shell .formation-strip span {
+  border-color: var(--line);
+}
+.app-shell .message > div {
+  background: color-mix(in srgb, var(--mint) 14%, var(--surface));
+  color: var(--mint);
+}
+.app-shell .message p {
+  background: var(--surface-soft);
+  border-color: var(--line);
+  color: var(--text-strong);
+}
+.app-shell .message.user p,
+.app-shell .message.user .message-body p {
+  background: color-mix(in srgb, var(--mint) 32%, var(--surface));
+  border-color: color-mix(in srgb, var(--mint) 55%, var(--line));
+}
+.app-shell .message p button {
+  color: var(--mint2);
+}
+.app-shell .suggestions button {
+  background: var(--surface-raised);
+  border-color: var(--control-border);
+  color: var(--text-body);
+}
+.app-shell .composer {
+  background: var(--surface-soft);
+  border-color: var(--control-border);
+}
+.app-shell .composer input {
+  background: transparent;
+  color: var(--text-strong);
+}
+.app-shell .composer input::placeholder {
+  color: var(--text-subtle);
+}
+.app-shell .composer button {
+  background: var(--mint);
+  color: var(--bg);
+}
+.app-shell .grounded {
+  color: var(--text-subtle);
+}
+.app-shell .dataset-api-result {
+  background: var(--surface);
+  border-color: var(--line);
+}
+.app-shell .dataset-api-result > div {
+  background: var(--surface-soft);
+  color: var(--text-strong);
+  border-color: var(--line);
+}
+.app-shell .dataset-api-result pre {
+  background: var(--surface);
+  color: var(--text-body);
+}
+.app-shell .dataset-api-result .text-button {
+  color: var(--text-body);
+}
+.app-shell .processing-script-viewer::selection,
+.app-shell .processing-script-editor::selection {
+  background: color-mix(in srgb, var(--mint) 30%, transparent);
+}
+/* The survey action container itself is a panel, not just its child controls. */
+.app-shell .viewer-context-row > .viewer-survey-actions,
+.app-shell .well-viewer-head > .viewer-survey-actions {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--text-body);
+}
+/* Final pass: parsing errors, dataset associations, survey actions and seismic canvas. */
+.app-shell .parse-error {
+  background: color-mix(in srgb, var(--amber) 8%, var(--surface));
+  border-color: color-mix(in srgb, var(--amber) 38%, var(--line));
+  color: var(--amber);
+}
+.app-shell .parse-error strong {
+  color: var(--amber);
+}
+.app-shell .parse-error span {
+  color: var(--text-subtle);
+}
+.app-shell #dataset-well-assignment,
+.app-shell #dataset-survey-assignment {
+  background: var(--surface-input);
+  color: var(--text-strong);
+  border-color: var(--control-border);
+  color-scheme: inherit;
+}
+.app-shell #dataset-well-assignment:hover,
+.app-shell #dataset-survey-assignment:hover,
+.app-shell #dataset-well-assignment:focus,
+.app-shell #dataset-survey-assignment:focus {
+  border-color: var(--mint);
+}
+.app-shell #dataset-well-assignment:focus,
+.app-shell #dataset-survey-assignment:focus {
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--mint) 18%, transparent);
+}
+.app-shell #dataset-well-assignment option,
+.app-shell #dataset-survey-assignment option {
+  background: var(--surface);
+  color: var(--text-strong);
+}
+.app-shell .viewer-survey-actions .btn-secondary,
+.app-shell .viewer-survey-actions button {
+  background: var(--surface-raised);
+  color: var(--text-body);
+  border-color: var(--control-border);
+}
+.app-shell .viewer-survey-actions .btn-secondary:hover:not(:disabled),
+.app-shell .viewer-survey-actions button:hover:not(:disabled) {
+  background: var(--surface-hover);
+  color: var(--mint2);
+  border-color: var(--mint);
+}
+.app-shell .viewer-survey-actions select {
+  background: var(--surface-input);
+  color: var(--text-strong);
+  border-color: var(--control-border);
+  color-scheme: inherit;
+}
+/* The seismic amplitudes remain data-driven; only the viewer chrome follows the theme. */
+.app-shell .seismic-canvas {
+  background: var(--surface-soft);
+  border-color: var(--line);
+}
+.app-shell .seismic-canvas.large.calibrated {
+  background: var(--surface);
+}
+.app-shell .seismic-canvas .canvas-controls {
+  background: var(--surface-raised);
+  border-bottom-color: var(--line);
+}
+.app-shell .seismic-canvas .canvas-controls > div {
+  border-right-color: var(--line);
+}
+.app-shell .seismic-canvas .canvas-controls span,
+.app-shell .seismic-canvas .scale-title-x,
+.app-shell .seismic-canvas .scale-title-y {
+  color: var(--text-subtle);
+}
+.app-shell .seismic-canvas .canvas-controls b {
+  color: var(--text-strong);
+}
+.app-shell .seismic-canvas .canvas-controls button {
+  background: var(--surface-input);
+  color: var(--text-body);
+  border-color: var(--control-border);
+}
+.app-shell .seismic-canvas .canvas-controls button:hover,
+.app-shell .seismic-canvas .canvas-controls button.active {
+  background: var(--surface-hover);
+  color: var(--mint2);
+  border-color: var(--mint);
+}
+.app-shell .seismic-canvas .canvas-controls select {
+  background: var(--surface-input);
+  color: var(--text-strong);
+  border: 1px solid var(--control-border);
+  border-radius: 4px;
+}
+.app-shell .seismic-canvas .scale-x,
+.app-shell .seismic-canvas .scale-y {
+  border-color: var(--control-border);
+}
+.app-shell .seismic-canvas .scale-x span,
+.app-shell .seismic-canvas .scale-y span {
+  color: var(--text-body);
+}
+.app-shell .seismic-canvas .scale-x span:before,
+.app-shell .seismic-canvas .scale-y span:after {
+  border-color: var(--muted);
+}
+.app-shell .seismic-canvas .seismic-label {
+  background: var(--surface-raised);
+  color: var(--text-strong);
+  border-color: var(--control-border);
+}
+.app-shell .seismic-canvas .cursor-readout {
+  background: var(--surface-raised);
+  color: var(--amber);
+  border-color: var(--control-border);
+}
+.app-shell .seismic-canvas .visual-empty {
+  color: var(--text-subtle);
+}
+/* Shared visual roles. Component classes remain responsible for layout and behaviour. */
+.app-shell .theme-panel {
+  background: var(--surface);
+  border-color: var(--line);
+  color: var(--text-body);
+}
+.app-shell .theme-inset {
+  background: var(--surface-soft);
+  border-color: var(--line);
+  color: var(--text-body);
+}
+.app-shell .theme-control {
+  border-color: var(--control-border);
+}
+.app-shell .theme-control:not(.btn-primary) {
+  background: var(--surface-raised);
+  color: var(--text-body);
+}
+.app-shell .theme-control:not(:disabled):hover {
+  border-color: var(--mint);
+}
+.app-shell .theme-control:not(.btn-primary):not(:disabled):hover {
+  background: var(--surface-hover);
+  color: var(--mint2);
+}
+.app-shell .theme-meta {
+  color: var(--text-subtle);
+  border-color: var(--line);
+}
+.app-shell .theme-meta code {
+  color: var(--mint2);
+}
+.app-shell .theme-action-group {
+  /* Shared marker for action layouts; component selectors define their layout. */
+  min-width: 0;
+}
+/* Processing job output and seismic X-axis use shared theme surfaces. */
+.app-shell .processing-job-details {
+  background: var(--surface-input);
+  color: var(--text-body);
+  border-color: var(--control-border);
+}
+.app-shell .seismic-canvas .scale-x {
+  background: var(--surface-raised);
+}
+/* Palette-aware surface layers. Every application surface uses these tokens,
+   so changing the scheme tints panels and nested backgrounds as well as the page canvas. */
+.app-shell[data-color-scheme="default"][data-theme="dark"] {
+  --surface: color-mix(in srgb, var(--mint) 3%, #0a1613);
+  --surface-raised: color-mix(in srgb, var(--mint) 5%, #0d1c17);
+  --surface-soft: color-mix(in srgb, var(--mint) 7%, #101f1b);
+  --surface-hover: color-mix(in srgb, var(--mint) 11%, #142720);
+  --surface-input: color-mix(in srgb, var(--mint) 2%, #091511);
+  --surface-danger: #291b17;
+  --surface-warning: color-mix(in srgb, var(--amber) 9%, var(--surface));
+  --surface-deep: #07110f;
+  --surface-header: #091411;
+}
+.app-shell[data-color-scheme="blue"][data-theme="dark"] {
+  --bg: #080f1b;
+  --panel: #0b1726;
+  --panel2: #101f32;
+  --surface: #0b1726;
+  --surface-raised: #0e1d30;
+  --surface-soft: #12243a;
+  --surface-hover: #192d47;
+  --surface-input: #091525;
+  --surface-deep: #080f1b;
+  --surface-header: #0a1625;
+}
+.app-shell[data-color-scheme="purple"][data-theme="dark"] {
+  --bg: #100c1b;
+  --panel: #171126;
+  --panel2: #201832;
+  --surface: #151024;
+  --surface-raised: #1a1530;
+  --surface-soft: #211a38;
+  --surface-hover: #2b2147;
+  --surface-input: #120e20;
+  --surface-deep: #100c1b;
+  --surface-header: #140f23;
+}
+.app-shell[data-color-scheme="red"][data-theme="dark"] {
+  --bg: #190d10;
+  --panel: #211215;
+  --panel2: #2b191d;
+  --surface: #1d1014;
+  --surface-raised: #241419;
+  --surface-soft: #2d1a20;
+  --surface-hover: #3a2028;
+  --surface-input: #190d11;
+  --surface-deep: #190d10;
+  --surface-header: #1c1014;
+}
+.app-shell[data-color-scheme="yellow"][data-theme="dark"] {
+  --bg: #171408;
+  --panel: #211c0d;
+  --panel2: #2c2512;
+  --surface: #1d190c;
+  --surface-raised: #25200f;
+  --surface-soft: #302813;
+  --surface-hover: #3d3218;
+  --surface-input: #191507;
+  --surface-deep: #171408;
+  --surface-header: #1c180a;
+}
+.app-shell[data-color-scheme="default"][data-theme="light"] {
+  --surface: #ffffff;
+  --surface-raised: #f8fbf9;
+  --surface-soft: #f1f6f3;
+  --surface-hover: #eaf2ed;
+  --surface-input: #ffffff;
+  --surface-deep: #f3f7f5;
+  --surface-header: #ffffff;
+}
+.app-shell[data-color-scheme="blue"][data-theme="light"] {
+  --bg: #f1f6fc;
+  --panel: #ffffff;
+  --panel2: #eaf2fb;
+  --surface: #fdfefe;
+  --surface-raised: #f5f9fe;
+  --surface-soft: #eaf2fb;
+  --surface-hover: #dceafb;
+  --surface-input: #ffffff;
+  --surface-deep: #f1f6fc;
+  --surface-header: #f8fbff;
+}
+.app-shell[data-color-scheme="purple"][data-theme="light"] {
+  --bg: #f6f2fb;
+  --panel: #ffffff;
+  --panel2: #f0eafb;
+  --surface: #fffefe;
+  --surface-raised: #faf7fe;
+  --surface-soft: #f0eafb;
+  --surface-hover: #e9def8;
+  --surface-input: #ffffff;
+  --surface-deep: #f6f2fb;
+  --surface-header: #fcfaff;
+}
+.app-shell[data-color-scheme="red"][data-theme="light"] {
+  --bg: #fcf3f3;
+  --panel: #ffffff;
+  --panel2: #f8eaea;
+  --surface: #fffefe;
+  --surface-raised: #fff8f8;
+  --surface-soft: #f8eaea;
+  --surface-hover: #f5dddd;
+  --surface-input: #ffffff;
+  --surface-deep: #fcf3f3;
+  --surface-header: #fffafa;
+}
+.app-shell[data-color-scheme="yellow"][data-theme="light"] {
+  --bg: #fbf8ed;
+  --panel: #ffffff;
+  --panel2: #f5efd9;
+  --surface: #fffefa;
+  --surface-raised: #fffdf5;
+  --surface-soft: #f5efd9;
+  --surface-hover: #eee4c2;
+  --surface-input: #ffffff;
+  --surface-deep: #fbf8ed;
+  --surface-header: #fffdf6;
+}
+/* Main application regions and cards */
+.app-shell .sidebar,
+.app-shell .topbar {
+  background: var(--surface-header);
+}
+.app-shell .workspace-card,
+.app-shell .viewer-panel,
+.app-shell .insight-panel,
+.app-shell .well-view,
+.app-shell .evidence-grid article,
+.app-shell .architecture,
+.app-shell .system-health-card,
+.app-shell .system-section,
+.app-shell .well-survey-visualization,
+.app-shell .well-table-api,
+.app-shell .processing-operation-grid article,
+.app-shell .processing-runner-settings,
+.app-shell .processing-script-viewer,
+.app-shell .processing-script-editor,
+.app-shell .processing-job-details,
+.app-shell .chat-window,
+.app-shell .chat-history,
+.project-dialog,
+.app-shell .dataset-api-tools,
+.app-shell .dataset-api-result,
+.app-shell .runtime-setting-field,
+.app-shell .runtime-setting-toggle {
+  background: var(--surface);
+}
+/* Secondary cards, controls, and nested content */
+.app-shell .table-labels,
+.app-shell .preview-meta > div,
+.app-shell .qc-note,
+.app-shell .well-track,
+.app-shell .csv-preview,
+.app-shell .well-table-metrics > div,
+.app-shell .well-table-scroll th,
+.app-shell .dataset-api-result > div,
+.app-shell .dataset-api-result pre,
+.app-shell .runtime-settings-note,
+.app-shell .runtime-format-grid label,
+.app-shell .processing-selected-resource > span,
+.app-shell .processing-resource-chip,
+.app-shell .processing-operation-icon,
+.app-shell .system-meta,
+.app-shell .survey-viewer-context,
+.app-shell .dataset-survey-assignment,
+.app-shell .chat-history-row:hover,
+.app-shell .chat-history-row.active,
+.app-shell .message p,
+.app-shell .suggestions button,
+.app-shell .composer,
+.app-shell .seismic-canvas .canvas-controls,
+.app-shell .seismic-canvas .scale-x,
+.app-shell .seismic-canvas .scale-y,
+.app-shell .seismic-canvas .seismic-label,
+.app-shell .seismic-canvas .cursor-readout,
+.project-dialog-close {
+  background: var(--surface-soft);
+}
+.app-shell .workspace-card select,
+.app-shell .workspace-surveys select,
+.app-shell .workspace-surveys .survey-datasets-button,
+.app-shell .viewer-survey-actions select,
+.app-shell .viewer-survey-actions button,
+.app-shell .survey-data-pick select,
+.app-shell .processing-dataset-select select,
+.app-shell .processing-field select,
+.app-shell .processing-runner-settings .processing-field input,
+.project-dialog input,
+.project-dialog textarea,
+.app-shell .runtime-setting-field input,
+.app-shell .runtime-setting-field textarea,
+.app-shell .display-mode select,
+.app-shell .seismic-canvas .canvas-controls button,
+.app-shell .seismic-canvas .canvas-controls select,
+.app-shell .inventory-action,
+.app-shell .btn-secondary {
+  background: var(--surface-input);
+}
+.app-shell .upload-icon,
+.app-shell .dataset > i,
+.app-shell .ev-icon,
+.app-shell .system-card-icon,
+.app-shell .capability-chip-list span,
+.app-shell .processing-toggle button.active,
+.app-shell .insight-panel > button,
+.app-shell .chat-suggested-questions button {
+  background: var(--surface-hover);
+}
+.app-shell .dropzone {
+  background: linear-gradient(120deg, var(--surface-soft), var(--surface));
+}
+.app-shell .dropzone:hover,
+.app-shell .dropzone.dragging {
+  background: var(--surface-hover);
+}
+.app-shell .seismic-canvas.large.calibrated {
+  background: var(--surface);
+}
+.app-shell .seismic-canvas.large.calibrated canvas {
+  background: #d9ddd9;
+}
+.app-shell .composer input,
+.app-shell .composer textarea,
+.app-shell .message .message-body {
+  background: transparent;
+}
+/* Semantic error/status surfaces and seismic amplitude imagery retain their own meaning. */
+/* Final background audit: all application surfaces resolve through palette tokens.
+   Intentional exceptions: semantic status indicators and seismic data imagery. */
+.app-shell .sidebar,
+.app-shell .workspace-card,
+.app-shell .inventory-table,
+.app-shell .preview-card,
+.app-shell .viewer-panel,
+.app-shell .insight-panel,
+.app-shell .well-view,
+.app-shell .chat-window,
+.app-shell .chat-history,
+.app-shell .system-health-card,
+.app-shell .system-section,
+.project-dialog,
+.app-shell .dataset-api-tools,
+.app-shell .dataset-api-result,
+.app-shell .well-table-api,
+.app-shell .well-survey-visualization,
+.app-shell .processing-runner-settings,
+.app-shell .processing-operation-grid article,
+.app-shell .runtime-setting-field,
+.app-shell .runtime-setting-toggle,
+.app-shell .evidence-grid article,
+.app-shell .architecture,
+.app-shell .workspace-card .workspace-project-detail,
+.app-shell .project-current-strip > div {
+  background: var(--surface);
+  border-color: var(--line);
+}
+.app-shell .topbar {
+  background: color-mix(in srgb, var(--surface-header, var(--surface)) 94%, transparent);
+}
+.app-shell .dropzone,
+.app-shell .survey-viewer-context,
+.app-shell .viewer-context-row > .viewer-survey-actions,
+.app-shell .well-table-metrics > div,
+.app-shell .well-survey-chart,
+.app-shell .preview-meta > div,
+.app-shell .table-labels,
+.app-shell .table-row:hover,
+.app-shell .table-row.selected,
+.app-shell .chat-history-row:hover,
+.app-shell .chat-history-row.active,
+.app-shell .message .message-body p,
+.app-shell .suggestions button,
+.app-shell .composer,
+.app-shell .runtime-settings-note,
+.app-shell .runtime-format-grid label,
+.app-shell .processing-selected-resource > span,
+.app-shell .processing-resource-chip,
+.app-shell .processing-operation-icon,
+.app-shell .dataset-api-result > div,
+.app-shell .dataset-api-result pre,
+.app-shell .well-table-scroll,
+.app-shell .well-table-scroll th,
+.app-shell .well-track,
+.app-shell .csv-preview,
+.app-shell .qc-note,
+.app-shell .canvas-controls,
+.app-shell .scale-x,
+.app-shell .scale-title-x,
+.app-shell .scale-y,
+.app-shell .seismic-label,
+.app-shell .cursor-readout,
+.project-dialog-close,
+.app-shell .workspace-surveys .survey-datasets-button,
+.app-shell .workspace-actions button,
+.app-shell .inventory-action,
+.app-shell .btn-secondary,
+.app-shell .open-viewer,
+.app-shell .system-meta,
+.app-shell .capability-chip-list span,
+.app-shell .processing-toggle button.active,
+.app-shell .chat-suggested-questions button {
+  background: var(--surface-soft);
+  border-color: var(--line);
+}
+.app-shell input:not([type="checkbox"]):not([type="radio"]),
+.app-shell select,
+.app-shell textarea,
+.app-shell .processing-script-viewer,
+.app-shell .processing-script-editor,
+.app-shell .processing-job-details,
+.app-shell .canvas-controls button,
+.project-dialog input,
+.project-dialog textarea,
+.app-shell .runtime-setting-field input,
+.app-shell .runtime-setting-field textarea,
+.app-shell .viewer-survey-actions select,
+.app-shell .survey-data-pick select,
+.app-shell .workspace-surveys select,
+.app-shell .processing-field select,
+.app-shell .processing-dataset-select select,
+.app-shell #dataset-well-assignment,
+.app-shell #dataset-survey-assignment {
+  background-color: var(--surface-input);
+}
+.app-shell .upload-icon,
+.app-shell .dataset > i,
+.app-shell .system-card-icon,
+.app-shell .ev-icon,
+.app-shell .insight-panel > button,
+.app-shell .processing-toggle button.active {
+  background: var(--surface-hover);
+}
+.app-shell .system-error,
+.app-shell .well-table-error,
+.app-shell .chat-error {
+  background: var(--surface-danger);
+}
+.app-shell .parse-error {
+  background: var(--surface-warning);
+}
+.app-shell .composer textarea,
+.app-shell .message .message-body,
+.app-shell .preview-title button,
+.app-shell .dataset-api-result .text-button {
+  background: transparent;
+}
+/* Shared typography and border contrast tokens for all palette combinations. */
+.app-shell[data-theme="dark"] {
+  --text-on-accent: #07110f;
+  --line-strong: color-mix(in srgb, var(--mint) 24%, var(--line));
+}
+.app-shell[data-theme="light"] {
+  --text-on-accent: #ffffff;
+  --line-strong: color-mix(in srgb, var(--mint) 30%, var(--line));
+}
+.app-shell .btn-primary,
+.project-dialog-actions .btn-primary,
+.app-shell .composer button {
+  color: var(--text-on-accent);
+}
+.app-shell :is(input, select, textarea):focus,
+.app-shell button:focus-visible {
+  outline-color: var(--mint);
+}
+.app-shell :is(.table-row, .markdown-table-wrap, .markdown-content th, .markdown-content td, .project-dialog-actions, .processing-submit-row) {
+  border-color: var(--control-border);
+}
+.app-shell :is(.brand, .topbar, .page, .viewer-head, .workspace-card, .processing-column, .chat-window, .chat-history) {
+  color: var(--text);
+}
+/* System capability and processing indicators use the active palette. */
+.app-shell {
+  --surface-success: color-mix(in srgb, var(--mint) 12%, var(--surface));
+  --surface-warning: color-mix(in srgb, var(--amber) 12%, var(--surface));
+}
+.app-shell .availability.available,
+.app-shell .processing-status span {
+  background: var(--surface-success);
+  border-color: color-mix(in srgb, var(--mint) 38%, var(--control-border));
+  color: var(--mint2);
+}
+.app-shell .availability.available {
+  color: var(--mint2);
+}
+.app-shell .availability.placeholder {
+  background: var(--surface-warning);
+  border-color: color-mix(in srgb, var(--amber) 38%, var(--control-border));
+  color: var(--amber);
+}
+.app-shell .processing-status span b {
+  color: var(--mint2);
+}
+/* Well parsed-table panels: every nested surface and chart element follows the active theme. */
+.app-shell .well-table-api,
+.app-shell .well-survey-visualization {
+  background: var(--surface);
+  color: var(--text-strong);
+  border-color: var(--line);
+}
+.app-shell .well-table-api :is(h2, .well-table-count strong, .well-table-metrics strong, .well-survey-visual-head strong) {
+  color: var(--text-strong);
+}
+.app-shell .well-table-api :is(p, small, .well-table-count span, .well-table-metrics span, .well-survey-visual-head span, .well-survey-note, .well-table-pagination) {
+  color: var(--text-subtle);
+}
+.app-shell .well-table-metrics > div,
+.app-shell .well-survey-chart,
+.app-shell .well-table-scroll {
+  background: var(--surface-soft);
+  border-color: var(--control-border);
+}
+.app-shell .well-table-scroll th {
+  background: var(--surface-raised);
+  color: var(--text-body);
+  border-color: var(--control-border);
+}
+.app-shell .well-table-scroll td {
+  color: var(--text-body);
+  border-color: var(--control-border);
+}
+.app-shell .well-table-scroll tbody tr:hover {
+  background: var(--surface-hover);
+}
+.app-shell .well-survey-chart > span {
+  color: var(--text-body);
+}
+.app-shell .well-survey-chart svg text {
+  fill: var(--text-subtle);
+}
+.app-shell .well-survey-chart .chart-gridline {
+  stroke: var(--line);
+}
+.app-shell .well-survey-chart .chart-axis {
+  stroke: var(--line-strong);
+}
+.app-shell .well-survey-line {
+  stroke: var(--mint);
+}
+.app-shell .well-survey-line.secondary-line {
+  stroke: var(--violet);
+}
+.app-shell .well-table-api .well-table-pagination button:disabled {
+  color: var(--text-subtle);
+  border-color: var(--line);
+  opacity: .65;
+}
+/* Light-mode parsed well tables: keep every nested surface, label and chart bound to the active palette. */
+.app-shell[data-theme="light"] .well-table-api,
+.app-shell[data-theme="light"] .well-survey-visualization {
+  background: var(--surface);
+  color: var(--text-strong);
+  border-color: var(--line);
+}
+.app-shell[data-theme="light"] .well-table-api :is(h2, .well-table-count strong, .well-table-metrics strong, .well-survey-visual-head strong) {
+  color: var(--text-strong);
+}
+.app-shell[data-theme="light"] .well-table-api :is(p, small, .well-table-count span, .well-table-metrics span, .well-survey-visual-head span, .well-survey-note, .well-table-pagination) {
+  color: var(--text-subtle);
+}
+.app-shell[data-theme="light"] .well-table-metrics > div,
+.app-shell[data-theme="light"] .well-survey-chart,
+.app-shell[data-theme="light"] .well-table-scroll {
+  background: var(--surface-soft);
+  border-color: var(--control-border);
+}
+.app-shell[data-theme="light"] .well-table-scroll th {
+  background: var(--surface-raised);
+  color: var(--text-body);
+  border-color: var(--control-border);
+}
+.app-shell[data-theme="light"] .well-table-scroll td {
+  background: transparent;
+  color: var(--text-body);
+  border-color: var(--control-border);
+}
+.app-shell[data-theme="light"] .well-table-scroll tbody tr:hover {
+  background: var(--surface-hover);
+}
+.app-shell[data-theme="light"] .well-survey-chart > span {
+  color: var(--text-body);
+}
+.app-shell[data-theme="light"] .well-survey-chart svg text {
+  fill: var(--text-subtle);
+}
+.app-shell[data-theme="light"] .well-survey-chart .chart-gridline {
+  stroke: var(--line);
+}
+.app-shell[data-theme="light"] .well-survey-chart .chart-axis {
+  stroke: var(--line-strong);
+}
+.app-shell[data-theme="light"] .well-survey-line {
+  stroke: var(--mint);
+}
+.app-shell[data-theme="light"] .well-survey-line.secondary-line {
+  stroke: var(--violet);
+}
+.app-shell[data-theme="light"] .well-table-api .well-table-pagination button {
+  background: var(--surface-raised);
+  color: var(--text-body);
+  border-color: var(--control-border);
+}
+.app-shell[data-theme="light"] .well-table-api .well-table-pagination button:disabled {
+  background: var(--surface-soft);
+  color: var(--text-subtle);
+  border-color: var(--line);
+}

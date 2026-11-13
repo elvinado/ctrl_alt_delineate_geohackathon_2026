@@ -1,0 +1,8 @@
+# GeoGG Stage G: package prediction volumes from a separate Stage F job.
+volume_products:
+  source_inference_job_id: b8176911-618c-48a3-961b-04e89343a3e7
+  generate_sections: true
+
+  # Derived SEG-Y is an interoperability export; native NPY remains canonical.
+  segy_export:
+    enabled: true
