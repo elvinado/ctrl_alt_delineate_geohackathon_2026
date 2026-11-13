@@ -7,20 +7,20 @@ export default defineConfig({
     host: '127.0.0.1',
     port: 4173,
     proxy: {
-      '/api': { target: 'http://127.0.0.1:8080', changeOrigin: true },
-      '/health': { target: 'http://127.0.0.1:8080', changeOrigin: true },
-      '/docs': { target: 'http://127.0.0.1:8080', changeOrigin: true },
-      '/openapi.json': { target: 'http://127.0.0.1:8080', changeOrigin: true },
+      '/api': { target: 'http://127.0.0.1:9090', changeOrigin: true },
+      '/health': { target: 'http://127.0.0.1:9090', changeOrigin: true },
+      '/docs': { target: 'http://127.0.0.1:9090', changeOrigin: true },
+      '/openapi.json': { target: 'http://127.0.0.1:9090', changeOrigin: true },
     },
   },
   preview: {
     host: '127.0.0.1',
     port: 4173,
     proxy: {
-      '/api': { target: 'http://127.0.0.1:8080', changeOrigin: true },
-      '/health': { target: 'http://127.0.0.1:8080', changeOrigin: true },
-      '/docs': { target: 'http://127.0.0.1:8080', changeOrigin: true },
-      '/openapi.json': { target: 'http://127.0.0.1:8080', changeOrigin: true },
+      '/api': { target: 'http://127.0.0.1:9090', changeOrigin: true },
+      '/health': { target: 'http://127.0.0.1:9090', changeOrigin: true },
+      '/docs': { target: 'http://127.0.0.1:9090', changeOrigin: true },
+      '/openapi.json': { target: 'http://127.0.0.1:9090', changeOrigin: true },
     },
   },
 })
