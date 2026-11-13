@@ -1,0 +1,173 @@
+# ============================================================
+# APGCE Geohackathon — combined frontend + backend .gitignore
+# Place this file at the repository root, alongside frontend/
+# and backend/.
+# ============================================================
+
+# ---- Environment variables and secrets ----
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+.secret/
+
+# ---- OS / editor / tooling ----
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.example.json
+
+# ---- Logs, temporary files and runtime state ----
+*.log
+logs/
+tmp/
+temp/
+.cache/
+*.pid
+*.seed
+*.pid.lock
+
+# ---- Frontend: Node / Vite / TypeScript ----
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.vite/
+frontend/.cache/
+frontend/coverage/
+frontend/.nyc_output/
+frontend/*.tsbuildinfo
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/pnpm-debug.log*
+frontend/.eslintcache
+frontend/.stylelintcache
+
+# Package-manager caches (if created inside the repository)
+.npm/
+.pnpm-store/
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# ---- Backend: Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.python-version
+.venv/
+venv/
+ENV/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pytype/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+*.egg
+*.egg-info/
+.eggs/
+wheels/
+pip-wheel-metadata/
+dist/
+build/
+
+# Python environment / package tooling
+poetry.lock.tmp
+.pdm-python
+.pdm-build/
+.pyre/
+.dmypy.json
+
+# ---- Notebooks ----
+.ipynb_checkpoints/
+
+# ---- Generated application data (do not commit user/project datasets) ----
+# Keep configuration, schemas and documentation tracked; ignore runtime data.
+site_data/
+data/
+datasets/
+uploads/
+downloads/
+artifacts/
+outputs/
+processed/
+scratch/
+work/
+working/
+jobs/
+job_runs/
+job_outputs/
+
+# Common scientific / geospatial / seismic data products
+*.sgy
+*.segy
+*.su
+*.las
+*.laz
+*.zgy
+*.npy
+*.npz
+*.h5
+*.hdf5
+*.zarr/
+*.parquet
+*.feather
+*.pkl
+*.pickle
+*.joblib
+*.pt
+*.pth
+*.onnx
+*.ckpt
+*.model
+
+# Generated visualisations and bulky exports
+*.vtk
+*.vtu
+*.vtp
+*.ply
+*.stl
+*.obj
+*.glb
+*.gltf
+*.tif
+*.tiff
+
+# ---- Databases and local state ----
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+
+# ---- Archives / generated bundles ----
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.7z
+
+# ---- Preserve intentional empty directories / templates ----
+!.gitkeep
+!**/.gitkeep
+!**/README*
+!**/LICENSE*
+!**/schema/
+!**/schemas/
